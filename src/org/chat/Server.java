@@ -4,12 +4,11 @@ import java.io.*;
 import java.util.*;
 
 public class Server {
-    int nextId = 0;
     ArrayList<Client> clients = new ArrayList<>();
     Server(int port){
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
-                ClientThread newThread = new ClientThread(serverSocket.accept(), this.nextId++);
+                ClientThread newThread = new ClientThread(serverSocket.accept());
                 newThread.start();
                 this.clients.add(newThread);
             }
@@ -32,9 +31,8 @@ public class Server {
         String nickname;
         PrintWriter out;
         boolean connected = true;
-        public ClientThread(Socket socket, int id){
+        public ClientThread(Socket socket){
             this.socket = socket;
-            this.nickname = "Anonymous" + String.valueOf(id);
         }
         public void run(){
             try {
