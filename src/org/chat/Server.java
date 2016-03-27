@@ -20,7 +20,7 @@ public class Server {
     }
 
     synchronized void processInput(ClientThread client, String input){
-        System.out.println(client.nickname+ " " + input);
+        System.out.println(client.nickname + " " + input);
         Protocol.processInput(input, client, this.clients);
     }
 
@@ -37,10 +37,8 @@ public class Server {
             try {
                 this.out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String inputLine, outputLine;
                 while(this.connected){
-                    inputLine = in.readLine();
-                    processInput(this, inputLine);
+                    processInput(this, in.readLine());
                 }
                 socket.close();
             } catch (IOException e){
