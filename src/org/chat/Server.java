@@ -23,7 +23,10 @@ public class Server {
         System.out.println(client.nickname + " " + input);
         Protocol.processInput(input, client, this.clients);
     }
-
+    synchronized void newClient(ClientThread client, String input){
+        System.out.println(input);
+        Protocol.newClient(input, client, this.clients);
+    }
     class ClientThread extends Thread implements Client{
         Socket socket;
         String nickname;
@@ -37,6 +40,7 @@ public class Server {
             try {
                 this.out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                newClient(this, in.readLine());
                 while(this.connected){
                     processInput(this, in.readLine());
                 }
