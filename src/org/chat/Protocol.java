@@ -10,7 +10,7 @@ public class Protocol {
             if(!getNicknames(clients).contains(nickname)){
                 client.setNickname(nickname);
             } else {
-                client.send("server error nickname" + nickname + " is already in use");
+                client.send("server error nickname " + nickname + " is already in use");
                 setToAnonymous(client);
             }
         } else {
@@ -58,7 +58,7 @@ public class Protocol {
     }
     static void nickname(String nickname, Client client, ArrayList<Client> clients){
         if(getNicknames(clients).contains(nickname)){
-            client.send("server nickname " + nickname + " is already in use");
+            client.send("server error nickname " + nickname + " is already in use");
         } else {
             String old = client.getNickname();
             client.setNickname(nickname);
